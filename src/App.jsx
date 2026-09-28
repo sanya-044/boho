@@ -18,7 +18,7 @@ function ImageCarousel({ images, title, className, style }) {
         <img
           key={img}
           src={img}
-          alt={`${title} - ${idx}`}
+          alt={`${title} ${idx}`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             idx === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
           }`}
@@ -38,8 +38,9 @@ export default function App() {
   const [boutiqueSlide, setBoutiqueSlide] = useState(0);
   const [boutiqueOffset, setBoutiqueOffset] = useState(0);
   const boutiqueTrackRef = useRef(null);
-  const [bookingData, setBookingData] = useState({ name: '', date: '2026-09-28', requests: '' });
+  const [bookingData, setBookingData] = useState({ name: '', date: '2026-09-29', requests: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   const handleBookingSubmit = (e) => {
     e.preventDefault();
@@ -57,8 +58,8 @@ export default function App() {
   ];
 
   const fashionLookbook = [
-    { title: "Twilight Indigo Kaftan", subtitle: "Hand-blocked organic cotton", image: "/bev.png" },
-    { title: "Artisan Cream Linen", subtitle: "Sustainable neutral tailoring", image: "/bevv.png" },
+    { title: "Twilight Indigo Kaftan", subtitle: "Hand-blocked organic cotton", image: "/fashh.png" },
+    { title: "Artisan Cream Linen", subtitle: "Sustainable neutral tailoring", image: "/suit.png" },
     { title: "Midnight Silhouette Dress", subtitle: "Crafted for unhurried evenings", image: "/fash.png" }
   ];
 
@@ -116,10 +117,20 @@ export default function App() {
     <div className="min-h-screen bg-[#f5efe6] text-[#2c3848] font-sans selection:bg-[#38bdf8] selection:text-[#1e293b]">
       
       {/* NAVBAR */}
+      {/* NAVBAR */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#f5efe6]/95 backdrop-blur-md border-b border-[#e2d8c8] px-8 md:px-16 py-5 flex justify-between items-center shadow-xs">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-full bg-[#38bdf8] flex items-center justify-center text-[#1e293b] font-serif font-bold text-sm shadow-sm">
-            BT
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#1e293b] flex items-center justify-center shadow-sm border border-[#d6ccb5]">
+            <img 
+              src="https://tse1.mm.bing.net/th/id/OIP.ILAx1KwR92WCCJ7xDCSnIAHaHU?r=0&pid=Api&h=220&P=0" 
+              alt="Boho Trunkk Logo" 
+              className="w-full h-full object-cover" 
+              onError={(e) => {
+                e.target.style.display = 'none';
+                if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+            <span className="font-serif text-xs font-bold text-[#f5efe6] tracking-tighter" style={{ display: 'none' }}>BT</span>
           </div>
           <span className="font-serif text-lg tracking-[0.2em] font-medium text-[#1e293b]">
             BOHO TRUNKK
@@ -133,9 +144,16 @@ export default function App() {
           <a href="#booking" className="hover:text-[#0284c7] transition">Reserve</a>
         </div>
 
-        <a href="#booking" className="bg-[#38bdf8] hover:bg-[#0ea5e9] text-[#1e293b] text-[11px] font-semibold uppercase tracking-[0.2em] px-6 py-2.5 rounded-full transition duration-300 shadow-sm">
-          Book Table
-        </a>
+        <div className="flex items-center space-x-4">
+          <a 
+            href="https://www.instagram.com/bohotrunkk" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="text-xs font-medium uppercase tracking-widest bg-[#1e293b] text-[#f5efe6] px-5 py-2.5 rounded-full hover:bg-[#334155] transition shadow-xs"
+          >
+            Instagram
+          </a>
+        </div>
       </nav>
 
       {/* HERO SECTION */}
@@ -301,37 +319,44 @@ export default function App() {
 
       {/* BOOKING SECTION */}
       <section id="booking" className="py-24 px-8 md:px-16 bg-[#f5efe6] border-t border-[#e2d8c8]">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           
           {/* Left Side: Café Info */}
-          <div className="space-y-6 bg-[#ede4d2] border border-[#d6ccb5] p-8 md:p-10 rounded-3xl shadow-md text-[#1e293b]">
+          <div className="space-y-6 bg-[#ede4d2] border border-[#d6ccb5] p-8 md:p-10 rounded-3xl shadow-md text-[#1e293b] flex flex-col justify-between">
             <div>
-              <span className="text-[#0284c7] text-[10px] font-medium uppercase tracking-[0.3em] mb-2 block">Connect With Us</span>
-              <h3 className="font-serif text-2xl md:text-3xl font-normal text-[#1e293b]">Cafe Boho Trunkk</h3>
+              <div>
+                <span className="text-[#0284c7] text-[10px] font-medium uppercase tracking-[0.3em] mb-2 block">Connect With Us</span>
+                <h3 className="font-serif text-2xl md:text-3xl font-normal text-[#1e293b]">Cafe Boho Trunkk</h3>
+              </div>
+              
+              <p className="text-xs md:text-sm text-[#5c6878] font-light leading-relaxed mt-4">
+                Experience the perfect blend of coffee, culinary arts, and sustainable fashion in an unhurried, beautiful environment.
+              </p>
             </div>
-            
-            <p className="text-xs md:text-sm text-[#5c6878] font-light leading-relaxed">
-              Experience the perfect blend of coffee, culinary arts, and sustainable fashion in an unhurried, beautiful environment.
-            </p>
 
             <div className="space-y-4 pt-2 text-xs text-[#475569]">
               <div className="flex items-start gap-3">
-                <span className="font-semibold text-[#1e293b] uppercase tracking-wider min-w-[70px]">Website:</span>
-                <a href="https://bohotrunk.com/" target="_blank" rel="noreferrer" className="text-[#0284c7] hover:underline break-all">
-                  https://bohotrunk.com/
+                
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="font-semibold text-[#1e293b] uppercase tracking-wider min-w-[70px] flex items-center">
+                  <svg className="w-4 h-4 fill-[#1e293b]" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </span>
+                <a href="https://www.instagram.com/bohotrunkk" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#0284c7] hover:underline">
+                  @bohotrunkk
                 </a>
               </div>
 
-              <div className="flex items-start gap-3">
-                <span className="font-semibold text-[#1e293b] uppercase tracking-wider min-w-[70px]">Insta:</span>
-                <a href="https://www.instagram.com/bohotrunkk" target="_blank" rel="noreferrer" className="text-[#0284c7] hover:underline break-all">
-                  instagram.com/bohotrunkk
-                </a>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <span className="font-semibold text-[#1e293b] uppercase tracking-wider min-w-[70px]">Ph. No.:</span>
-                <a href="tel:+917003182337" className="text-[#1e293b] font-medium hover:text-[#0284c7]">
+              <div className="flex items-center gap-3">
+                <span className="font-semibold text-[#1e293b] uppercase tracking-wider min-w-[70px] flex items-center">
+                  <svg className="w-4 h-4 fill-[#22c55e]" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                </span>
+                <a href="https://wa.me/917003182337?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Boho%20Trunkk%20Caf%C3%A9" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#22c55e] font-medium hover:underline">
                   +91 70031 82337
                 </a>
               </div>
@@ -339,78 +364,80 @@ export default function App() {
           </div>
 
           {/* Right Side: Table Reservation Form */}
-          <div className="w-full bg-[#ede4d2] border border-[#d6ccb5] p-8 rounded-3xl shadow-xl relative text-[#1e293b]">
-            <div className="mb-6">
-              <h3 className="font-serif text-xl font-medium tracking-wide mb-1 text-[#1e293b]">Reserve a Table</h3>
-              <p className="text-[11px] text-[#5c6878]">20% introductory discount automatically applied.</p>
-            </div>
-
-            {isSubmitted ? (
-              <div className="bg-[#dbeafe] border border-[#38bdf8] text-[#1e40af] p-6 rounded-2xl text-center space-y-2">
-                <p className="text-xs font-medium uppercase tracking-wider">Table Secured ✓</p>
-                <p className="text-[11px] text-[#475569]">Your reservation has been logged. We look forward to hosting you.</p>
+          <div className="w-full bg-[#ede4d2] border border-[#d6ccb5] p-8 md:p-10 rounded-3xl shadow-xl relative text-[#1e293b] flex flex-col justify-between">
+            <div>
+              <div className="mb-6">
+                <h3 className="font-serif text-xl md:text-2xl font-medium tracking-wide mb-1 text-[#1e293b]">Reserve a Table</h3>
+                <p className="text-[11px] text-[#5c6878]">20% introductory discount automatically applied.</p>
               </div>
-            ) : (
-              <form onSubmit={handleBookingSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Guest Name</label>
-                  <input 
-                    type="text" required
-                    placeholder="Sanya Chauhan"
-                    value={bookingData.name}
-                    onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-                    className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#1e293b]"
-                  />
-                </div>
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Party Scale</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['Couple (2)', 'Family (4)', 'Friends (6)'].map((type) => (
-                      <button
-                        type="button" key={type}
-                        onClick={() => setGuestCount(type)}
-                        className={`py-2 px-1 text-[11px] rounded-lg border transition-all ${
-                          guestCount === type 
-                          ? 'bg-[#38bdf8] text-[#1e293b] border-[#38bdf8] font-semibold shadow-xs' 
-                          : 'bg-[#f5efe6] text-[#475569] border-[#d6ccb5] hover:border-[#94a3b8]'
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
+              {isSubmitted ? (
+                <div className="bg-[#dbeafe] border border-[#38bdf8] text-[#1e40af] p-6 rounded-2xl text-center space-y-2">
+                  <p className="text-xs font-medium uppercase tracking-wider">Table Secured ✓</p>
+                  <p className="text-[11px] text-[#475569]">Your reservation has been logged. We look forward to hosting you.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleBookingSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Guest Name</label>
+                    <input 
+                      type="text" required
+                      placeholder="Sanya Chauhan"
+                      value={bookingData.name}
+                      onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
+                      className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#1e293b]"
+                    />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Date</label>
-                  <input 
-                    type="date" 
-                    value={bookingData.date}
-                    onChange={(e) => setBookingData({...bookingData, date: e.target.value})}
-                    className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#475569]"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Party Scale</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['Couple (2)', 'Family (4)', 'Friends (6)'].map((type) => (
+                        <button
+                          type="button" key={type}
+                          onClick={() => setGuestCount(type)}
+                          className={`py-2 px-1 text-[11px] rounded-lg border transition-all ${
+                            guestCount === type 
+                            ? 'bg-[#38bdf8] text-[#1e293b] border-[#38bdf8] font-semibold shadow-xs' 
+                            : 'bg-[#f5efe6] text-[#475569] border-[#d6ccb5] hover:border-[#94a3b8]'
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Preferences / Occasion</label>
-                  <input 
-                    type="text" 
-                    placeholder="Quiet corner, acoustic seating..."
-                    value={bookingData.requests}
-                    onChange={(e) => setBookingData({...bookingData, requests: e.target.value})}
-                    className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#1e293b]"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Date</label>
+                    <input 
+                      type="date" 
+                      value={bookingData.date}
+                      onChange={(e) => setBookingData({...bookingData, date: e.target.value})}
+                      className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#475569]"
+                    />
+                  </div>
 
-                <button 
-                  type="submit"
-                  className="w-full bg-[#38bdf8] hover:bg-[#0ea5e9] text-[#1e293b] text-[11px] font-semibold uppercase tracking-[0.2em] py-3.5 rounded-xl transition duration-300 shadow-md mt-2"
-                >
-                  Confirm Reservation
-                </button>
-              </form>
-            )}
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.2em] text-[#5c6878] mb-1.5">Preferences / Occasion</label>
+                    <input 
+                      type="text" 
+                      placeholder="Quiet corner, acoustic seating..."
+                      value={bookingData.requests}
+                      onChange={(e) => setBookingData({...bookingData, requests: e.target.value})}
+                      className="w-full bg-[#f5efe6] border border-[#d6ccb5] rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-[#38bdf8] transition text-[#1e293b]"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    className="w-full bg-[#38bdf8] hover:bg-[#0ea5e9] text-[#1e293b] text-[11px] font-semibold uppercase tracking-[0.2em] py-3.5 rounded-xl transition duration-300 shadow-md mt-2"
+                  >
+                    Confirm Reservation
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
 
         </div>
@@ -460,15 +487,35 @@ export default function App() {
       {/* FOOTER */}
       <footer className="py-16 px-8 md:px-16 bg-[#e5dbc9] text-[#1e293b] border-t border-[#d6ccb5] flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full bg-[#38bdf8] text-[#1e293b] flex items-center justify-center font-serif text-xs font-bold">BT</div>
+          <div className="w-8 h-8 rounded-full overflow-hidden bg-[#1e293b] flex items-center justify-center border border-[#d6ccb5]">
+            {!logoError ? (
+              <img 
+                src="https://tse1.mm.bing.net/th/id/OIP.ILAx1KwR92WCCJ7xDCSnIAHaHU?r=0&pid=Api&h=220&P=0" 
+                alt="Boho Trunkk Logo" 
+                className="w-full h-full object-cover" 
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <span className="font-serif text-[10px] font-bold text-[#f5efe6] tracking-tighter">BT</span>
+            )}
+          </div>
           <span className="font-serif text-xs tracking-[0.2em]">BOHO TRUNKK CAFÉ</span>
         </div>
         <p className="text-[11px] text-[#5c6878] text-center md:text-left font-light">
           L 38, Indranipark, Prince Anwar Shah Road, Tollygunge, Kolkata, West Bengal 700033
         </p>
-        <div className="flex space-x-5 text-[#475569] text-xs tracking-wider font-medium">
-          <a href="https://www.instagram.com/bohotrunkk" target="_blank" rel="noreferrer" className="hover:text-[#0284c7] transition">INSTAGRAM</a>
-          <a href="tel:+917003182337" className="hover:text-[#0284c7] transition">CONTACT</a>
+        <div className="flex items-center space-x-3">
+          <a 
+            href="https://www.instagram.com/bohotrunkk" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="w-8 h-8 rounded-full bg-[#ede4d2] border border-[#d6ccb5] flex items-center justify-center text-[#1e293b] hover:bg-[#38bdf8] hover:border-[#38bdf8] transition shadow-xs"
+            title="Instagram @bohotrunkk"
+          >
+            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
         </div>
       </footer>
     </div>
